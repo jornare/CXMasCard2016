@@ -245,8 +245,8 @@ var ondevicemotion = function (event) {
 	event.acceleration = event.acceleration || { x: 0, y: 9.81, z: 0 };
 	if (event.acceleration.x === null) {
 		event.acceleration.x = event.accelerationIncludingGravity.x = 0;
-		event.acceleration.y = event.accelerationIncludingGravity.x = 9.81;
-		event.acceleration.z = event.accelerationIncludingGravity.x = 0;
+		event.acceleration.y = event.accelerationIncludingGravity.y = 9.81;
+		event.acceleration.z = event.accelerationIncludingGravity.z = 0;
 	}
 	var ax = event.acceleration.x / 9.81,
 		ay = -event.acceleration.y / 9.81,
