@@ -242,8 +242,8 @@ window.onload = function () {
 
 
 var ondevicemotion = function (event) {
-	var acc = event.acceleration || { x: 0, y: 9.81, z: 0 },
-		accIncGrav = event.accelerationIncludingGravity || { x: 0, y: 9.81, z: 0 };
+	var acc = event.acceleration && event.acceleration.x !== null ? event.acceleration : { x: 0, y: 9.81, z: 0 },
+		accIncGrav = event.accelerationIncludingGravity && event.accelerationIncludingGravity.x !== null ? event.accelerationIncludingGravity:  { x: 0, y: 9.81, z: 0 };
 
 	if (acc.x === null) {
 		acc.x = accIncGrav.x = 0;
