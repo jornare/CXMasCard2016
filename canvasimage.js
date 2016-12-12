@@ -6,6 +6,7 @@ var CanvasImage = function( x, y, width, height, src, collisionMap ){
 	this.height=height || 0.0;
 	this.img = new Image();
 	this.img.src = src;
+	this.img.setAttribute('crossOrigin', '');
 	this.canvas = document.createElement('canvas');
 	this.collisionMap = collisionMap?[]:false;
 

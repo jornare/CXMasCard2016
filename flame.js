@@ -6,6 +6,7 @@ var Flame = function( x, y ){
 	this.colors =[];
 	this.flare = new Image();
 	this.flare.src = 'img/flare.png';
+	this.flare.setAttribute('crossOrigin', '');
 	this.flareWidth=1;
 	this.flareHeight=1;
 	this.heatCenterY = 1;

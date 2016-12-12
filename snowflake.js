@@ -1,6 +1,7 @@
 var PI2=Math.PI*2;
 var snowFlakeImg = new Image();
 snowFlakeImg.src = "img/snowflake.png";
+snowFlakeImg.setAttribute('crossOrigin', '');
 //var snowflake = 
 
 var SnowFlake = function( x, y, speedx, speedy ){
