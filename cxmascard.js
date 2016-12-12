@@ -242,19 +242,20 @@ window.onload = function () {
 
 
 var ondevicemotion = function (event) {
-	event.acceleration = event.acceleration || { x: 0, y: 9.81, z: 0 };
-	event.accelerationIncludingGravity = event.accelerationIncludingGravity || { x: 0, y: 9.81, z: 0 };
-	if (event.acceleration.x === null) {
-		event.acceleration.x = event.accelerationIncludingGravity.x = 0;
-		event.acceleration.y = event.accelerationIncludingGravity.y = 9.81;
-		event.acceleration.z = event.accelerationIncludingGravity.z = 0;
+	var acc = event.acceleration || { x: 0, y: 9.81, z: 0 },
+		accIncGrav = event.accelerationIncludingGravity || { x: 0, y: 9.81, z: 0 };
+
+	if (acc.x === null) {
+		acc.x = accIncGrav.x = 0;
+		acc.y = accIncGrav.y = 9.81;
+		acc.z = accIncGrav.z = 0;
 	}
-	var ax = event.acceleration.x / 9.81,
-		ay = -event.acceleration.y / 9.81,
-		az = -event.acceleration.z / 9.81,
-		gx = event.accelerationIncludingGravity.x / 9.81,
-		gy = -event.accelerationIncludingGravity.y / 9.81,
-		gz = -event.accelerationIncludingGravity.z / 9.81,
+	var ax = acc.x / 9.81,
+		ay = -acc.y / 9.81,
+		az = -acc.z / 9.81,
+		gx = accIncGrav.x / 9.81,
+		gy = -accIncGrav.y / 9.81,
+		gz = -accIncGrav.z / 9.81,
 		landscape = scene.width > scene.height;
 
 	if (landscape) {
