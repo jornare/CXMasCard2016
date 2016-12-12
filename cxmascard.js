@@ -243,6 +243,7 @@ window.onload = function () {
 
 var ondevicemotion = function (event) {
 	event.acceleration = event.acceleration || { x: 0, y: 9.81, z: 0 };
+	event.accelerationIncludingGravity = event.accelerationIncludingGravity || { x: 0, y: 9.81, z: 0 };
 	if (event.acceleration.x === null) {
 		event.acceleration.x = event.accelerationIncludingGravity.x = 0;
 		event.acceleration.y = event.accelerationIncludingGravity.y = 9.81;
