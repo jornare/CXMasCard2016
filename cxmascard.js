@@ -4,7 +4,7 @@ function getBgImageUrl() {
 	if(search && search.indexOf('?bg=') == 0) {
 		return search.substr(4);
 	}
-	return 'img/candlewallpaper.jpg';
+	return 'img/front.jpg';
 }
 var Scene = function () {
 	var self = this;
