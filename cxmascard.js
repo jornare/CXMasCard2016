@@ -15,7 +15,7 @@ var Scene = function () {
 	this.canvas = null;
 	this.drawTimer = null;
 	this.snowFlakes = [];
-	this.cxlogo = new CanvasImage(100, 200, 400, 100, 'img/cxlogo.png', true);
+	this.cxlogo = new CanvasImage(100, 200, 100, 25, 'img/cxlogo.png', true);
 	this.bg = new CanvasImage(0, 0, 200, 200, getBgImageUrl());
 	this.stats = false;
 
@@ -31,7 +31,7 @@ var Scene = function () {
 	self.stuckFlakes = [];
 
 
-	self.flame = null;
+	//self.flame = null;
 	//self.flame = new Flame(213,265);
 
 	this.onLoad = function (canvas, canvascol) {
@@ -75,7 +75,7 @@ var Scene = function () {
 				f.x += self.width;
 			}
 			//melting
-			f.life -= self.flame.melts(f.x, f.y);
+			//f.life -= self.flame.melts(f.x, f.y);
 			if (f.speedx * f.speedy == 0.0) {
 				f.life -= 0.0001 * elapsed;
 			}
@@ -169,13 +169,13 @@ var Scene = function () {
 		self.canvas.height = h;
 		self.bg.width = w;
 		self.bg.height = h;
-		self.cxlogo.width = Math.floor(self.scale.x * 820 * 0.8);
-		self.cxlogo.height = Math.floor(self.scale.y * 262 * 0.8);
-		self.cxlogo.x = Math.floor(self.scale.x * 30);
-		self.cxlogo.y = Math.floor(self.scale.y * 450);
+		self.cxlogo.width = Math.floor(self.scale.x * 410 * 0.8);
+		self.cxlogo.height = Math.floor(self.scale.y * 131 * 0.8);
+		self.cxlogo.x = Math.floor(self.scale.x * 600);
+		self.cxlogo.y = Math.floor(self.scale.y * 600);
 		self.cxlogo.createCollisionMap();
 
-		self.flame = new Flame(self.scale.x * 806.0, self.scale.y * 330.0);
+		//self.flame = new Flame(self.scale.x * 806.0, self.scale.y * 330.0);
 
 		var numflakes = Math.max(Math.min(self.width * self.height * 0.001, 1000), 300);
 		for (i = self.snowFlakes.length; i < numflakes; i++) {
