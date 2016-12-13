@@ -1,5 +1,11 @@
 var TwoPI = 2 * Math.PI;
-
+function getBgImageUrl() {
+	var search = window.location.search;
+	if(search && search.indexOf('?bg=') == 0) {
+		return search.substr(4);
+	}
+	return 'img/candlewallpaper.jpg';
+}
 var Scene = function () {
 	var self = this;
 	this.width = 0;
@@ -10,7 +16,7 @@ var Scene = function () {
 	this.drawTimer = null;
 	this.snowFlakes = [];
 	this.cxlogo = new CanvasImage(100, 200, 400, 100, 'img/cxlogo.png', true);
-	this.bg = new CanvasImage(0, 0, 200, 200, 'img/candlewallpaper.jpg');
+	this.bg = new CanvasImage(0, 0, 200, 200, getBgImageUrl());
 	this.stats = false;
 
 	self.x = 0;
@@ -216,7 +222,6 @@ function setReceipient() {
 	var to = document.getElementById('to');
 	to.innerText = decodeURIComponent(receipient) || 'Deg';
 }
-
 
 
 window.onresize = function () {
