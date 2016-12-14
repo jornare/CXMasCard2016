@@ -6,12 +6,53 @@
 			id="viewport" 
 			content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0">
 	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta name="author" content="Jørn Are Hatlelid" />
-	<script type="text/javascript" src="flame.js"></script>
-	<script type="text/javascript" src="snowflake.js"></script>
-	<script type="text/javascript" src="canvasimage.js"></script>
-	<script type="text/javascript" src="cxmascard.js"></script>
+	<meta name="author" content="Jørn Are Hatlelid @ Computas AS" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link href='https://fonts.googleapis.com/css?family=Rochester' rel='stylesheet' type='text/css' />
+	<link rel="icon" type="image/x-icon" href="img/favicon.ico" />
+	<script type="text/javascript">
+	    var _gaq = _gaq || [];
+	    _gaq.push(['_setAccount', 'UA-29558326-1']);
+	    _gaq.push(['_trackPageview']);
+
+	    (function () {
+	        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	    })();
+	</script>
+    <script type="text/javascript" src="js/canvasimage.js"></script>
+    <script type="text/javascript" src="js/snow.js"></script>
+    <script type="text/javascript" src="js/scene.js"></script>
+    <script type="text/javascript" src="js/frontScene.js"></script>
+    <script type="text/javascript" src="js/card.js"></script>
+    <script type="text/javascript" src="js/cxmascard.js"></script>
 <style type="text/css">
+html, body{
+	overflow:hidden;
+	height:100%;
+}
+
+
+.icoPlay {
+	opacity: 0;
+	width: 80px;
+	height: 80px;
+	position: absolute;
+	top: 50%;
+	left: 49%;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+	margin: auto;
+	color: black;
+	transition: opacity .25s ease-in-out;
+	-moz-transition: opacity .25s ease-in-out;
+	-webkit-transition: opacity .25s ease-in-out;
+	background: transparent url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIyMHB4IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAyMCAyMCIgd2lkdGg9IjIwcHgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6c2tldGNoPSJodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2gvbnMiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48dGl0bGUvPjxkZXNjLz48ZGVmcy8+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIiBpZD0iUGFnZS0xIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSI+PGcgZmlsbD0iIzAwMDAwMCIgaWQ9Ikljb25zLUFWIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTY4LjAwMDAwMCwgLTg1LjAwMDAwMCkiPjxnIGlkPSJwbGF5LWNpcmNsZS1vdXRsaW5lIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNjguMDAwMDAwLCA4NS4wMDAwMDApIj48cGF0aCBkPSJNOCwxNC41IEwxNCwxMCBMOCw1LjUgTDgsMTQuNSBMOCwxNC41IFogTTEwLDAgQzQuNSwwIDAsNC41IDAsMTAgQzAsMTUuNSA0LjUsMjAgMTAsMjAgQzE1LjUsMjAgMjAsMTUuNSAyMCwxMCBDMjAsNC41IDE1LjUsMCAxMCwwIEwxMCwwIFogTTEwLDE4IEM1LjYsMTggMiwxNC40IDIsMTAgQzIsNS42IDUuNiwyIDEwLDIgQzE0LjQsMiAxOCw1LjYgMTgsMTAgQzE4LDE0LjQgMTQuNCwxOCAxMCwxOCBMMTAsMTggWiIgaWQ9IlNoYXBlIi8+PC9nPjwvZz48L2c+PC9zdmc+);
+	background-size: 100%;
+}
+
 .card {
 	float: left;
 	width: 100%;
@@ -19,8 +60,9 @@
 	margin: 0px;
 	position: relative;
 	font-size: .8em;	
-	-webkit-perspective: 600px;
 	-moz-perspective: 600px;
+	-webkit-perspective: 600px;
+	perspective: 600px;
 }
 .card .front, .card .back{
 	float:none;
@@ -58,11 +100,10 @@
 
 
 	/* -- transition is the magic sauce for animation -- */
-	-o-transition: all .4s ease-in-out;
-	-ms-transition: all .4s ease-in-out;
-	-moz-transition: all .4s ease-in-out;
-	-webkit-transition: all .4s ease-in-out;
-	transition: all .4s ease-in-out;
+	-o-transition: all 1s ease-in-out;
+	-moz-transition: all 1s ease-in-out;
+	-webkit-transition: all 1s ease-in-out;
+	transition: all 1s ease-in-out;
 }
 
 .card.flip .front{
@@ -91,11 +132,10 @@
 	transform-style: preserve-3d;
 	backface-visibility: hidden;
 	/* -- transition is the magic sauce for animation -- */
-	-o-transition: all .4s ease-in-out;
-	-ms-transition: all .4s ease-in-out;
-	-moz-transition: all .4s ease-in-out;
-	-webkit-transition: all .4s ease-in-out;
-	transition: all .4s ease-in-out;
+	-o-transition: all 1s ease-in-out;
+	-moz-transition: all 1s ease-in-out;
+	-webkit-transition: all 1s ease-in-out;
+	transition: all 1s ease-in-out;
 }
 
 .card.flip .back{
@@ -108,7 +148,7 @@
 	background:#eee;
 }
 
-#content{
+.content{
 	width:55%;
 	height:100%;
 	display:inline-block;
@@ -117,14 +157,13 @@
 }
 
 .handwriting{
-	font-family:  "Comic Sans MS", "Comic Sans";
+	/*font-family:  "Comic Sans MS", "Comic Sans";*/
+	font-family: 'Rochester', cursive;
 	font-size: 100%;
 	padding: 10pt;
 }
 .handwriting div{
-	font-size: 80%;
 	margin-top: 8pt;
-	font-family:  "Arial";
 }
 
 .addr{
@@ -147,14 +186,46 @@
 	
 }
 
-@media screen and (min-width:500px){
+.switchLang{
+    font-size:60%;
+    margin-top:12pt;
+}
+.switchLang:hover{
+    text-decoration:underline;
+    cursor:pointer;
+}
+
+
+@media screen and (min-width:640px) and (max-width:900px){
 	.handwriting{
 		font-size:24px;
 	}
+
+	.signaturewriting{
+		text-align:center;
+		font-size:18px;
+	}	
+}
+
+@media screen and (min-width:900px){
+	.handwriting{
+		font-size:28px;
+	}
+
 	.signaturewriting{
 		text-align:center;
 		font-size:20px;
-		
+	}	
+}
+
+@media screen and (min-width:1800px){
+	.handwriting{
+		font-size:54px;
+	}
+
+	.signaturewriting{
+		text-align:center;
+		font-size:38px;
 	}	
 }
 
@@ -162,43 +233,53 @@
 	
 </head>
 <body style="padding:0;margin:0;">
-	<div id="card" class="card" >
-		<div id ="front" class="front" >
-			<canvas id="scenecanvas" width="100" height="100"></canvas>
-		</div>
-		<div id="back" class="back" onclick="flip(true)">
-			<img src="img/cardbg.jpg" style="width:inherit;height:inherit;position:absolute;"/>
-			<div id="content" class="handwriting" style="margin:2%;height:inherit;position:absolute">
-				<p>Computas takker for et godt samarbeid i �ret som har g�tt.</p>
-				<p>Vi �nsker deg og dine en riktig God Jul og et Godt Nytt �r!</p>
-	
-				<div style="margin-top:10%">
-					<p>			
-						Computas har i �r valgt � gi �rets julegave til Kirkens Bymisjon i Oslo.
-						Vi gir 1000 julemiddager til rusavhengige.
-					</p>
-					<p>
-						Kirkens Bymisjon er et nettverk av diakonale stiftelser fordelt over store deler av landet, med sentre i 10 byer i Norge.
-						De m�ter mennesker p� ulike m�ter gjennom opps�kende virksomhet i rus- og prostitusjonsmilj�ene, arbeid med barnevern og ungdomspsykiatri, behandling for rusmiddelavhengige, omsorgstiltak, voksenpsykiatri, eldreomsorg.
-					</p>
-				</div>	
-			</div>
-			<div class="addr" style="top:33%">
-				<div class="addrfield handwriting">Til <span id="to">Deg</span></div>
-				<div class="addrfield handwriting">Fra Computas</div>
-			</div>
-			<div class="addr" style="top:70%">
-				<div class="signaturewriting">Trond Eilertsen</div>
-				<div class="signaturewriting">Daglig Leder</div>
-			</div>			
-			<div class="addr" style="bottom:5%">
-				<div class="handwriting" style="margin-top:10%;">P.S. <br />Lek gjerne med sn�en</div>
-			</div>
-			
-		</div>
-		
-	</div>
+    <div id="card" class="card flip">
+        <div id="front" class="front">
+            <canvas id="scenecanvas" width="100" height="100" style="width:100%;height:100%;position:absolute"></canvas>
+        </div>
+        <div id="back" class="back" onclick="card.flip(true);document.getElementsByTagName('audio')[0].play();" ontouchend="document.getElementsByTagName('audio')[0].play();card.flip(true)">
+            <img src="img/cardbg.jpg" style="width:inherit;height:inherit;position:absolute;" />
+			<div class="icoPlay"></div>
+            <div id="norwegian">
+                <div class="content handwriting" style="margin:2%;height:inherit;position:absolute">
+                    <p>Computas ønsker å takke for et godt samarbeid i året som har gått!</p>
+                    <div style="margin-top:10%">
+                        <p>Tradisjonen tro har vi også i år valgt å støtte en god sak, denne gangen gir vi årets julegave til Kirkens Bymisjon og deres aksjon “Gled en som gruer seg til jul". Kirkens Bymisjon er en åpen og inkluderende organisasjon som arbeider i over 20 byer i Norge, blant mennesker som strever med hverdagen.</p>
+                    </div>
+                    <p>Vi ønsker deg og dine en fredelig og inspirerende høytid og et godt nytt år! </p>
+                </div>
+                <div class="addr" style="top:33%">
+                    <div class="addrfield handwriting">Til <span id="to" class="to">Deg</span></div>
+                    <div class="addrfield handwriting">Fra Computas</div>
+                </div>
+            </div>
+            <div id="english">
+                <div class="content handwriting" style="margin:2%;height:inherit;position:absolute">
+                    <p>Computas would like to thank you all for the good cooperation in the year passed!</p>
+                    <div style="margin-top:10%">
+                        <p>According to tradition, we have again decided to support a worthy cause. Our Christimas gift this year will be given to Kirkens Bymisjon, The Church City Mission in Norway, and their campaign “Gled en som gruer seg til jul", “Light in the Dark”. The Church City Mission is an open and inclusive organization working in more than 20 cities in Norway among people who struggle in their everyday lives.</p>
+                    </div>
+                    <p>We wish you and those close to you a peaceful and inspiring holiday and a happy new year! </p>
+					<p></p>
+                </div>
+                <div class="addr" style="top:33%">
+                    <div class="addrfield handwriting">To <span id="to_en" class="to">You</span></div>
+                    <div class="addrfield handwriting">From Computas</div>
+                </div>
+            </div>
+            <div class="addr" style="top:70%">
+                <div class="signaturewriting">Trond Eilertsen</div>
+                <div class="signaturewriting">Adm. Dir.</div>
+            </div>
+        </div>
+    </div>
 
+    <audio autoplay loop volume="1.0" controls z-index="1000">
+		<source src="audio/jinglebells.aac" type="audio/aac" />
+        <source src="audio/jinglebells.ogg" type="audio/ogg" />
+        <source src="audio/jinglebells.wma" type="audio/wma" />
+        <source src="audio/jinglebells.mp3" type="audio/mpeg" />
+    </audio>
 </body>
 </html>
 
